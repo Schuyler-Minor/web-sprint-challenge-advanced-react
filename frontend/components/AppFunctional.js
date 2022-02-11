@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useState } from "react";
 
 export default function AppFunctional(props) {
+  const [emailInput, setEmailInput] = useState("");
+
+  const handleChange = (event) => {
+    setEmailInput(event.target.value);
+  };
+
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
@@ -29,9 +35,15 @@ export default function AppFunctional(props) {
         <button id="reset">reset</button>
       </div>
       <form>
-        <input id="email" type="email" placeholder="type email"></input>
+        <input
+          value={emailInput}
+          onChange={handleChange}
+          id="email"
+          type="email"
+          placeholder="type email"
+        ></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
-  )
+  );
 }

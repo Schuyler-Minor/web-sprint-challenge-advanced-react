@@ -2,8 +2,8 @@ import React from "react";
 import axios from "axios";
 
 const initialState = {
-  x: 1,
-  y: 2,
+  positionX: 1,
+  positionY: 2,
   steps: 3,
   email: "lady@gaga.com",
 };
@@ -18,8 +18,8 @@ export default class AppClass extends React.Component {
     const payLoadToSend = {
       email: this.state.email,
       steps: this.state.steps,
-      x: this.state.x,
-      y: this.state.y,
+      x: this.state.positionX,
+      y: this.state.positionY,
     };
     axios
       .post(URL, payLoadToSend)
@@ -30,6 +30,11 @@ export default class AppClass extends React.Component {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  onChange = (event) => {
+    const { value, id } = event.target;
+    this.setState({ ...this.state, [id]: value });
   };
 
   render() {
@@ -66,7 +71,13 @@ export default class AppClass extends React.Component {
           <button id="reset">reset</button>
         </div>
         <form onSubmit={this.onSubmit}>
-          <input id="email" type="email" placeholder="type email"></input>
+          <input
+            onChange={this.onChange}
+            value={this.state.email.data}
+            id="email"
+            type="email"
+            placeholder="type email"
+          ></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>
