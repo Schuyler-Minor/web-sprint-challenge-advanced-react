@@ -1,8 +1,43 @@
-import React from 'react'
+import React from "react";
+import axios from "axios";
+
+const initialState = {
+  x: 1,
+  y: 2,
+  steps: 3,
+  email: "lady@gaga.com",
+};
+
+const URL = "http://localhost:9000/api/result";
 
 export default class AppClass extends React.Component {
+  state = initialState;
+
+  onSubmit = (event) => {
+    event.preventDefault();
+    const payLoadToSend = {
+      email: this.state.email,
+      steps: this.state.steps,
+      x: this.state.x,
+      y: this.state.y,
+    };
+    axios
+      .post(URL, payLoadToSend)
+      .then((res) => {
+        console.log(res.data.message);
+        this.setState({ ...this.state, message: res.data.message });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
-    const { className } = this.props
+    console.log("THE STATE ---> ", this.state);
+
+    const { className } = this.props;
+    console.log("PROPS", this.props);
+
     return (
       <div id="wrapper" className={className}>
         <div className="info">
@@ -30,11 +65,11 @@ export default class AppClass extends React.Component {
           <button id="down">DOWN</button>
           <button id="reset">reset</button>
         </div>
-        <form>
+        <form onSubmit={this.onSubmit}>
           <input id="email" type="email" placeholder="type email"></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>
-    )
+    );
   }
 }
