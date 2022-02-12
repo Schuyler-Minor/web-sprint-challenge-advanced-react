@@ -51,9 +51,10 @@ export default class AppClass extends React.Component {
   };
 
   stepCounter = (event) => {
-    console.log("something happened");
-    const { value } = event.target;
-    this.setState({ ...this.state, steps: value + 1 });
+    this.setState({
+      ...this.state,
+      steps: this.state.steps + 1,
+    });
   };
 
   render() {
