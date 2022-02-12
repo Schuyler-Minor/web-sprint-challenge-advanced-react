@@ -2,9 +2,9 @@ import React from "react";
 import axios from "axios";
 
 const initialState = {
-  x: 2,
-  y: 2,
-  steps: 3,
+  x: 1,
+  y: 1,
+  steps: 0,
   email: "",
   message: "",
   error: "",
@@ -29,12 +29,19 @@ export default class AppClass extends React.Component {
         x: this.state.x,
       })
       .then((res) => {
-        this.setState({ ...this.state, message: res.data.message });
-        this.setState({ ...this.state, error: "" });
+        this.setState({
+          ...this.state,
+          message: res.data.message,
+          error: "",
+          email: "",
+        });
       })
       .catch((err) => {
-        this.setState({ ...this.state, error: err.response.data.message });
-        this.setState({ ...this.state, message: "" });
+        this.setState({
+          ...this.state,
+          error: err.response.data.message,
+          message: "",
+        });
       });
   };
 
@@ -43,14 +50,22 @@ export default class AppClass extends React.Component {
     this.postEmailChange();
   };
 
+  stepCounter = (event) => {
+    console.log("something happened");
+    const { value } = event.target;
+    this.setState({ ...this.state, steps: value + 1 });
+  };
+
   render() {
     const { className } = this.props;
 
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates (2, 2)</h3>
-          <h3 id="steps">You moved 0 times</h3>
+          <h3 id="coordinates">
+            Coordinates: ({this.state.x},{this.state.y})
+          </h3>
+          <h3 id="steps">You moved {this.state.steps} times</h3>
         </div>
         <div id="grid">
           <div className="square"></div>
@@ -70,10 +85,18 @@ export default class AppClass extends React.Component {
           </h3>
         </div>
         <div id="keypad">
-          <button id="left">LEFT</button>
-          <button id="up">UP</button>
-          <button id="right">RIGHT</button>
-          <button id="down">DOWN</button>
+          <button onClick={this.stepCounter} id="left">
+            LEFT
+          </button>
+          <button onClick={this.stepCounter} id="up">
+            UP
+          </button>
+          <button onClick={this.stepCounter} id="right">
+            RIGHT
+          </button>
+          <button onClick={this.stepCounter} id="down">
+            DOWN
+          </button>
           <button id="reset">reset</button>
         </div>
         <form onSubmit={this.emailSubmit}>
