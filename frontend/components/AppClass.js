@@ -2,8 +2,8 @@ import React from "react";
 import axios from "axios";
 
 const initialState = {
-  x: 1,
-  y: 1,
+  x: 2,
+  y: 2,
   steps: 0,
   email: "",
   message: "",
@@ -57,6 +57,13 @@ export default class AppClass extends React.Component {
     });
   };
 
+  resetStepCounter = (event) => {
+    this.setState({
+      ...this.state,
+      steps: 0,
+    });
+  };
+
   render() {
     const { className } = this.props;
 
@@ -98,7 +105,9 @@ export default class AppClass extends React.Component {
           <button onClick={this.stepCounter} id="down">
             DOWN
           </button>
-          <button id="reset">reset</button>
+          <button onClick={this.resetStepCounter} id="reset">
+            reset
+          </button>
         </div>
         <form onSubmit={this.emailSubmit}>
           <input
