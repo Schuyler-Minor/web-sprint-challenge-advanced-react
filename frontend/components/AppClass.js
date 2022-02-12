@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 const initialState = {
-  x: 1,
+  x: 2,
   y: 2,
   steps: 3,
   email: "",
@@ -15,29 +15,12 @@ const URL = "http://localhost:9000/api/result";
 export default class AppClass extends React.Component {
   state = initialState;
 
-  // onSubmit = (event) => {
-  //   event.preventDefault();
-  //   const payLoadToSend = {
-  //     email: this.state.email,
-  //     steps: this.state.steps,
-  //     x: this.state.x,
-  //     y: this.state.y,
-  //   };
-  //   axios
-  //     .post(URL, payLoadToSend)
-  //     .then((res) => {
-  //       this.setState({ ...this.state, message: res.data.message });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   emailChange = (event) => {
     const { value } = event.target;
     this.setState({ ...this.state, email: value });
   };
 
+  resetEmailChange;
   postEmailChange = () => {
     axios
       .post(URL, {
@@ -48,12 +31,11 @@ export default class AppClass extends React.Component {
       })
       .then((res) => {
         this.setState({ ...this.state, message: res.data.message });
-        // console.log(res);
+        this.setState({ ...this.state, email: "" });
       })
       .catch((err) => {
         this.setState({ ...this.state, error: err.response.data.message });
-
-        // console.log(err);
+        this.setState({ ...this.state, message: "" });
       });
   };
 
