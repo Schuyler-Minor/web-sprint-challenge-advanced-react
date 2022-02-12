@@ -20,7 +20,6 @@ export default class AppClass extends React.Component {
     this.setState({ ...this.state, email: value });
   };
 
-  resetEmailChange;
   postEmailChange = () => {
     axios
       .post(URL, {
@@ -31,7 +30,7 @@ export default class AppClass extends React.Component {
       })
       .then((res) => {
         this.setState({ ...this.state, message: res.data.message });
-        this.setState({ ...this.state, email: "" });
+        this.setState({ ...this.state, error: "" });
       })
       .catch((err) => {
         this.setState({ ...this.state, error: err.response.data.message });
