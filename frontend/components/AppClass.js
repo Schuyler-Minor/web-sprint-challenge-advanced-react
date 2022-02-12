@@ -1,7 +1,14 @@
 import React from "react";
 import axios from "axios";
 
-const initialState = { x: 1, y: 2, steps: 3, email: "" };
+const initialState = {
+  x: 1,
+  y: 2,
+  steps: 3,
+  email: "",
+  message: "",
+  error: "",
+};
 
 const URL = "http://localhost:9000/api/result";
 
@@ -31,6 +38,30 @@ export default class AppClass extends React.Component {
     this.setState({ ...this.state, email: value });
   };
 
+  postEmailChange = () => {
+    axios
+      .post(URL, {
+        email: this.state.email,
+        steps: this.state.steps,
+        y: this.state.y,
+        x: this.state.x,
+      })
+      .then((res) => {
+        this.setState({ ...this.state, message: res.data.message });
+        // console.log(res);
+      })
+      .catch((err) => {
+        this.setState({ ...this.state, error: err.response.data.message });
+
+        // console.log(err);
+      });
+  };
+
+  emailSubmit = (event) => {
+    event.preventDefault();
+    this.postEmailChange();
+  };
+
   render() {
     const { className } = this.props;
 
@@ -52,7 +83,10 @@ export default class AppClass extends React.Component {
           <div className="square"></div>
         </div>
         <div className="info">
-          <h3 id="message"></h3>
+          <h3 id="message">
+            {this.state.message}
+            {this.state.error}
+          </h3>
         </div>
         <div id="keypad">
           <button id="left">LEFT</button>
@@ -61,7 +95,7 @@ export default class AppClass extends React.Component {
           <button id="down">DOWN</button>
           <button id="reset">reset</button>
         </div>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.emailSubmit}>
           <input
             onChange={this.emailChange}
             value={this.state.email}
