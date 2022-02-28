@@ -1,17 +1,42 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function AppFunctional(props) {
+  const URL = "http://localhost:9000/api/result";
+  const [steps, setSteps] = useState(0);
   const [emailInput, setEmailInput] = useState("");
+  const [y, setY] = useState(2);
+  const [x, setX] = useState(2);
+  const [email, setEmail] = useState("");
+
+  const stepCounter = () => {
+    setSteps(steps + 1);
+  };
+  const resetSteps = () => {
+    setSteps(0);
+  };
 
   const handleChange = (event) => {
-    setEmailInput(event.target.value);
+    setEmail(event.target.value);
+  };
+
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+    axios
+      .post(URL, { steps, y, x, email })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">Coordinates (2, 2)</h3>
-        <h3 id="steps">You moved 0 times</h3>
+        <h3 id="steps">You moved {steps} times</h3>
       </div>
       <div id="grid">
         <div className="square"></div>
@@ -28,15 +53,25 @@ export default function AppFunctional(props) {
         <h3 id="message"></h3>
       </div>
       <div id="keypad">
-        <button id="left">LEFT</button>
-        <button id="up">UP</button>
-        <button id="right">RIGHT</button>
-        <button id="down">DOWN</button>
-        <button id="reset">reset</button>
+        <button onClick={stepCounter} id="left">
+          LEFT
+        </button>
+        <button onClick={stepCounter} id="up">
+          UP
+        </button>
+        <button onClick={stepCounter} id="right">
+          RIGHT
+        </button>
+        <button onClick={stepCounter} id="down">
+          DOWN
+        </button>
+        <button onClick={resetSteps} id="reset">
+          reset
+        </button>
       </div>
-      <form>
+      <form onSubmit={onSubmit}>
         <input
-          value={emailInput}
+          value={email}
           onChange={handleChange}
           id="email"
           type="email"
