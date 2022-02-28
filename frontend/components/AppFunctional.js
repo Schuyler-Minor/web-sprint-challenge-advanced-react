@@ -4,16 +4,18 @@ import axios from "axios";
 export default function AppFunctional(props) {
   const URL = "http://localhost:9000/api/result";
   const [steps, setSteps] = useState(0);
-  const [emailInput, setEmailInput] = useState("");
-  const [y, setY] = useState(2);
   const [x, setX] = useState(2);
+  const [y, setY] = useState(1);
   const [email, setEmail] = useState("");
+  const [grid, setGrid] = useState("");
+  const [message, setMessage] = useState("");
 
   const stepCounter = () => {
     setSteps(steps + 1);
   };
   const resetSteps = () => {
     setSteps(0);
+    setMessage("");
   };
 
   const handleChange = (event) => {
@@ -25,17 +27,22 @@ export default function AppFunctional(props) {
     axios
       .post(URL, { steps, y, x, email })
       .then((res) => {
-        console.log(res);
+        setMessage(res.data.message);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setEmail("");
       });
   };
 
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates (2, 2)</h3>
+        <h3 id="coordinates">
+          Coordinates ({x}, {y})
+        </h3>
         <h3 id="steps">You moved {steps} times</h3>
       </div>
       <div id="grid">
@@ -50,7 +57,7 @@ export default function AppFunctional(props) {
         <div className="square"></div>
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
         <button onClick={stepCounter} id="left">
