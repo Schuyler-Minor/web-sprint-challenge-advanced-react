@@ -30,17 +30,17 @@ export default function AppFunctional(props) {
       .post(URL, { email, steps, y, x })
       .then((res) => {
         setMessage(res.data.message);
+        setEmail("");
       })
       .catch((err) => {
         setMessage(err.response.data.message);
-      })
-      .finally(() => {
-        setEmail("");
       });
+    // .finally(() => {
+    //   setEmail("");
+    // });
   };
 
   const yHandler = (incoming) => {
-    console.log(x);
     if (x - incoming < 4 && x - incoming > 0) {
       setX(x - incoming);
       stepCounter();
@@ -48,7 +48,6 @@ export default function AppFunctional(props) {
   };
 
   const xHandler = (incoming) => {
-    console.log(y);
     if (y + incoming < 4 && y + incoming > 0) {
       setY(y + incoming);
       stepCounter();
@@ -60,10 +59,7 @@ export default function AppFunctional(props) {
 
     for (let horz = 1; horz < 4; horz++) {
       for (let vert = 1; vert < 4; vert++) {
-        console.log("log", horz, vert);
-
         if (x === horz && y === vert) {
-          console.log("yup", x, y);
           outgoing.push(<div className="square active">B</div>);
         } else {
           outgoing.push(<div className="square"></div>);

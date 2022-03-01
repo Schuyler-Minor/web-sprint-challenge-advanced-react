@@ -57,11 +57,57 @@ export default class AppClass extends React.Component {
     });
   };
 
+  xHandlerLeft = () => {
+    let x = this.state.x;
+    if (x < 4 && x > 1) {
+      this.setState({
+        ...this.state,
+        x: x - 1,
+        steps: this.state.steps + 1,
+      });
+    }
+  };
+
+  xHandlerRight = () => {
+    let x = this.state.x;
+    if (x < 3 && x > 0) {
+      this.setState({
+        ...this.state,
+        x: x + 1,
+        steps: this.state.steps + 1,
+      });
+    }
+  };
+
+  yHandlerDown = () => {
+    let y = this.state.y;
+    if (y < 4 && y > 1) {
+      this.setState({
+        ...this.state,
+        y: this.state.y - 1,
+        steps: this.state.steps + 1,
+      });
+    }
+  };
+
+  yHandlerUp = () => {
+    let y = this.state.y;
+    if (y < 3 && y > 0) {
+      this.setState({
+        ...this.state,
+        y: y + 1,
+        steps: this.state.steps + 1,
+      });
+    }
+  };
+
   resetStepCounter = () => {
     this.setState({
       ...this.state,
       steps: 0,
       message: "",
+      x: 2,
+      y: 2,
     });
   };
 
@@ -94,16 +140,16 @@ export default class AppClass extends React.Component {
           </h3>
         </div>
         <div id="keypad">
-          <button onClick={this.stepCounter} id="left">
+          <button onClick={this.xHandlerLeft} id="left">
             LEFT
           </button>
-          <button onClick={this.stepCounter} id="up">
+          <button onClick={this.yHandlerUp} id="up">
             UP
           </button>
-          <button onClick={this.stepCounter} id="right">
+          <button onClick={this.xHandlerRight} id="right">
             RIGHT
           </button>
-          <button onClick={this.stepCounter} id="down">
+          <button onClick={this.yHandlerDown} id="down">
             DOWN
           </button>
           <button onClick={this.resetStepCounter} id="reset">
