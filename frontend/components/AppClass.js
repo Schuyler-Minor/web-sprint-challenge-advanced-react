@@ -81,7 +81,7 @@ export default class AppClass extends React.Component {
 
   yHandlerDown = () => {
     let y = this.state.y;
-    if (y < 3 && y > 1) {
+    if (y < 3 && y > 0) {
       this.setState({
         ...this.state,
         y: y + 1,
