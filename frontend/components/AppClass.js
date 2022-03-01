@@ -81,10 +81,10 @@ export default class AppClass extends React.Component {
 
   yHandlerDown = () => {
     let y = this.state.y;
-    if (y < 4 && y > 1) {
+    if (y < 3 && y > 1) {
       this.setState({
         ...this.state,
-        y: this.state.y - 1,
+        y: y + 1,
         steps: this.state.steps + 1,
       });
     }
@@ -92,10 +92,10 @@ export default class AppClass extends React.Component {
 
   yHandlerUp = () => {
     let y = this.state.y;
-    if (y < 3 && y > 0) {
+    if (y < 4 && y > 1) {
       this.setState({
         ...this.state,
-        y: y + 1,
+        y: y - 1,
         steps: this.state.steps + 1,
       });
     }
@@ -111,6 +111,24 @@ export default class AppClass extends React.Component {
     });
   };
 
+  gridComponent = () => {
+    let outgoing = [];
+    let x = this.state.x;
+    let y = this.state.y;
+
+    for (let vert = 1; vert < 4; vert++) {
+      for (let horz = 1; horz < 4; horz++) {
+        if (x === horz && y === vert) {
+          outgoing.push(<div className="square active">B</div>);
+        } else {
+          outgoing.push(<div className="square"></div>);
+        }
+      }
+    }
+
+    return outgoing;
+  };
+
   render() {
     const { className } = this.props;
 
@@ -122,17 +140,7 @@ export default class AppClass extends React.Component {
           </h3>
           <h3 id="steps">You moved {this.state.steps} times</h3>
         </div>
-        <div id="grid">
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square active">B</div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-        </div>
+        <div id="grid">{this.gridComponent()}</div>
         <div className="info">
           <h3 id="message">
             {this.state.message}
