@@ -61,6 +61,7 @@ export default class AppClass extends React.Component {
     this.setState({
       ...this.state,
       steps: 0,
+      message: "",
     });
   };
 

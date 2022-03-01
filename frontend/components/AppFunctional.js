@@ -7,9 +7,8 @@ export default function AppFunctional(props) {
   const [x, setX] = useState(2);
   const [y, setY] = useState(2);
   const [email, setEmail] = useState("");
-  const [grid, setGrid] = useState([]);
+
   const [message, setMessage] = useState("");
-  const [coordinates, getCoordinates] = useState("");
 
   const stepCounter = () => {
     setSteps(steps + 1);
@@ -17,6 +16,8 @@ export default function AppFunctional(props) {
   const resetSteps = () => {
     setSteps(0);
     setMessage("");
+    setX(2);
+    setY(2);
   };
 
   const handleChange = (event) => {
@@ -28,12 +29,10 @@ export default function AppFunctional(props) {
     axios
       .post(URL, { email, steps, y, x })
       .then((res) => {
-        console.log(res);
         setMessage(res.data.message);
       })
       .catch((err) => {
         setMessage(err.response.data.message);
-        console.log(err);
       })
       .finally(() => {
         setEmail("");
@@ -59,7 +58,6 @@ export default function AppFunctional(props) {
   const gridComponent = () => {
     let outgoing = [];
 
-    // {for horz 1-3}
     for (let horz = 1; horz < 4; horz++) {
       for (let vert = 1; vert < 4; vert++) {
         console.log("log", horz, vert);
@@ -68,20 +66,10 @@ export default function AppFunctional(props) {
           console.log("yup", x, y);
           outgoing.push(<div className="square active">B</div>);
         } else {
-          // console.log("nope", x, y);
           outgoing.push(<div className="square"></div>);
         }
       }
     }
-
-    //   {for vert 1-3}
-    //     {if x = horz && y === vert}
-    //       outgoing = <div className="square active">B</div>
-    //     {else}
-    //       outgoing = <div className="square"></div>
-    //     {endif}
-    //   {endfor vert}
-    // {endfor horz}
 
     return outgoing;
   };
@@ -93,20 +81,7 @@ export default function AppFunctional(props) {
         </h3>
         <h3 id="steps">You moved {steps} times</h3>
       </div>
-      <div id="grid">
-        {gridComponent()}
-        {/* <div className="square">{position() === 1 ? "B" : ""}</div> */}
-        {/* <div className="square"></div>
-
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square active">B</div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div> */}
-      </div>
+      <div id="grid">{gridComponent()}</div>
       <div className="info">
         <h3 id="message">{message}</h3>
       </div>
