@@ -40,16 +40,30 @@ export default function AppFunctional(props) {
     // });
   };
 
-  const yHandler = (incoming) => {
-    if (x - incoming < 4 && x - incoming > 0) {
-      setX(x - incoming);
+  const xHandlerLeft = () => {
+    if (x < 4 && x > 1) {
+      setX(x - 1);
       stepCounter();
     }
   };
 
-  const xHandler = (incoming) => {
-    if (y + incoming < 4 && y + incoming > 0) {
-      setY(y + incoming);
+  const xHandlerRight = () => {
+    if (x < 3 && x > 0) {
+      setX(x + 1);
+      stepCounter();
+    }
+  };
+
+  const yHandlerUp = () => {
+    if (y < 4 && y > 1) {
+      setY(y - 1);
+      stepCounter();
+    }
+  };
+
+  const yHandlerDown = () => {
+    if (y < 3 && y > 0) {
+      setY(y + 1);
       stepCounter();
     }
   };
@@ -57,8 +71,8 @@ export default function AppFunctional(props) {
   const gridComponent = () => {
     let outgoing = [];
 
-    for (let horz = 1; horz < 4; horz++) {
-      for (let vert = 1; vert < 4; vert++) {
+    for (let vert = 1; vert < 4; vert++) {
+      for (let horz = 1; horz < 4; horz++) {
         if (x === horz && y === vert) {
           outgoing.push(<div className="square active">B</div>);
         } else {
@@ -82,16 +96,16 @@ export default function AppFunctional(props) {
         <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button onClick={() => xHandler(-1)} id="left">
+        <button onClick={xHandlerLeft} id="left">
           LEFT
         </button>
-        <button onClick={() => yHandler(1)} id="up">
+        <button onClick={yHandlerUp} id="up">
           UP
         </button>
-        <button onClick={() => xHandler(1)} id="right">
+        <button onClick={xHandlerRight} id="right">
           RIGHT
         </button>
-        <button onClick={() => yHandler(-1)} id="down">
+        <button onClick={yHandlerDown} id="down">
           DOWN
         </button>
         <button onClick={resetSteps} id="reset">
