@@ -50,14 +50,14 @@ export default class AppClass extends React.Component {
     this.postEmailChange();
   };
 
-  stepCounter = (event) => {
+  stepCounter = () => {
     this.setState({
       ...this.state,
       steps: this.state.steps + 1,
     });
   };
 
-  resetStepCounter = (event) => {
+  resetStepCounter = () => {
     this.setState({
       ...this.state,
       steps: 0,
