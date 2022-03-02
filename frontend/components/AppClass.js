@@ -65,6 +65,11 @@ export default class AppClass extends React.Component {
         x: x - 1,
         steps: this.state.steps + 1,
       });
+    } else {
+      this.setState({
+        ...this.state,
+        error: "You can't go left",
+      });
     }
   };
 
@@ -76,6 +81,11 @@ export default class AppClass extends React.Component {
         x: x + 1,
         steps: this.state.steps + 1,
       });
+    } else {
+      this.setState({
+        ...this.state,
+        error: "You can't go right",
+      });
     }
   };
 
@@ -86,6 +96,12 @@ export default class AppClass extends React.Component {
         ...this.state,
         y: y + 1,
         steps: this.state.steps + 1,
+        error: "",
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        error: "You can't go down",
       });
     }
   };
@@ -98,6 +114,11 @@ export default class AppClass extends React.Component {
         y: y - 1,
         steps: this.state.steps + 1,
       });
+    } else {
+      this.setState({
+        ...this.state,
+        error: "You can't go up",
+      });
     }
   };
 
@@ -108,6 +129,7 @@ export default class AppClass extends React.Component {
       message: "",
       x: 2,
       y: 2,
+      error: "",
     });
   };
 

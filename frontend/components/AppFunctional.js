@@ -7,7 +7,7 @@ export default function AppFunctional(props) {
   const [x, setX] = useState(2);
   const [y, setY] = useState(2);
   const [email, setEmail] = useState("");
-
+  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   const stepCounter = () => {
@@ -18,6 +18,8 @@ export default function AppFunctional(props) {
     setMessage("");
     setX(2);
     setY(2);
+    setEmail("");
+    setError("");
   };
 
   const handleChange = (event) => {
@@ -30,20 +32,18 @@ export default function AppFunctional(props) {
       .post(URL, { email, steps, y, x })
       .then((res) => {
         setMessage(res.data.message);
-        setEmail("");
       })
       .catch((err) => {
         setMessage(err.response.data.message);
       });
-    // .finally(() => {
-    //   setEmail("");
-    // });
   };
 
   const xHandlerLeft = () => {
     if (x < 4 && x > 1) {
       setX(x - 1);
       stepCounter();
+    } else {
+      setError("You can't go left");
     }
   };
 
@@ -51,6 +51,8 @@ export default function AppFunctional(props) {
     if (x < 3 && x > 0) {
       setX(x + 1);
       stepCounter();
+    } else {
+      setError("You can't go right");
     }
   };
 
@@ -58,6 +60,8 @@ export default function AppFunctional(props) {
     if (y < 4 && y > 1) {
       setY(y - 1);
       stepCounter();
+    } else {
+      setError("You can't go up");
     }
   };
 
@@ -65,6 +69,8 @@ export default function AppFunctional(props) {
     if (y < 3 && y > 0) {
       setY(y + 1);
       stepCounter();
+    } else {
+      setError("You can't go down");
     }
   };
 
@@ -93,7 +99,10 @@ export default function AppFunctional(props) {
       </div>
       <div id="grid">{gridComponent()}</div>
       <div className="info">
-        <h3 id="message">{message}</h3>
+        <h3 id="message">
+          {message}
+          {error}
+        </h3>
       </div>
       <div id="keypad">
         <button onClick={xHandlerLeft} id="left">
